@@ -15,12 +15,38 @@
       tags: ['Webpack', 'Mock']
     }
   ]
+
+  const tags = solutionList.reduce((tags, item) => {
+    tags = tags.concat(item.tags);
+    return tags;
+  },[]);
+
+  $: activeTags = [];
+  $: filterSolutionList = solutionList.filter(item => {
+    if (!activeTags.length) return true;
+    if (item.tags.some(tag => activeTags.includes(tag))) {
+      return true;
+    }
+    return false;
+  })
+
+  function handleClick(event) {
+    const selectTag = event.detail.detail;
+    if (activeTags.includes(selectTag)) {
+      activeTags = activeTags.filter(item => item !== selectTag);
+    } else {
+      activeTags = [...activeTags, selectTag];
+    }
+  }
 </script>
 
 <main>
   <div>
+    <div class="filters">
+      <Tags tags={tags} bind:activeTags={activeTags} on:click={handleClick} />
+    </div>
     <div class="solution-list">
-      {#each solutionList as item}
+      {#each filterSolutionList as item}
         <a href="{item.repository}" target="_blank">
           <div class="solution">
             <h3>{item.name}</h3>
@@ -49,15 +75,35 @@
     border: 1px solid #CCC;
     border-radius: 4px;
     width: 220px;
-    height: 160px;
+    height: 140px;
     display: flex;
     flex-direction: column;
+  }
+
+  .solution h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
   }
 
   .feature-list {
     font-size: 12px;
     overflow-y: scroll;
     margin-bottom: 10px;
-    height: 70px;
+    flex: 1;
+  }
+
+  .filters {
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 568px) { 
+    .solution-list {
+      flex-direction: column;
+    }
+
+    .solution {
+      flex: 1;
+      width: auto;
+    }
   }
 </style>
