@@ -3,6 +3,12 @@
 
   let solutionList = [
     {
+      name: 'React 权限检查',
+      featureList: ['提供 Auth 组件', '提供 useAuth hook', '提供 React-Router 路由守卫案例'],
+      repository: 'https://stackblitz.com/edit/vitejs-vite-7nrbfd',
+      tags: ['React', '权限']
+    },
+    {
       name: 'Vue3 权限检查',
       featureList: ['提供 Auth 组件', '提供 useAuth hook', '提供 Vue-Router 路由守卫案例'],
       repository: 'https://stackblitz.com/edit/vitejs-vite-yk5qlg',
