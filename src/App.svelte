@@ -22,10 +22,13 @@
     }
   ]
 
-  const tags = solutionList.reduce((tags, item) => {
+  let tags = solutionList.reduce((tags, item) => {
     tags = tags.concat(item.tags);
     return tags;
-  },[]);
+  },[])
+  tags = tags.filter((item, i) => {
+    return tags.indexOf(item) === i;
+  });
 
   $: activeTags = [];
   $: filterSolutionList = solutionList.filter(item => {
